@@ -185,13 +185,14 @@ namespace ChamSocThuCungThreeModel
         public void ThongKe()
         {
             DataTable dataTable = DAO.Instance.ThongKe();
-            DataRow dataRow1 = dataTable.Rows[0];
+            DataRow dataRow1 = dataTable.Rows[1];
             int slcbenh = dataRow1.Field<int>("TongSoLuong");
             double dtcbenh = dataRow1.Field<double>("TongDoanhThuChuaBenh");
 
-            DataRow dataRow2 = dataTable.Rows[1];
+            DataRow dataRow2 = dataTable.Rows[0];
             int slcsho = dataRow2.Field<int>("TongSoLuong");
             double dtcsho = dataRow2.Field<double>("TongDoanhThuChamSocHo");
+
             MessageBox.Show("Số lượng thú chữa bệnh: " + slcbenh + " Con\n" +
                             "Doanh thu thú chữa bệnh: " + (dtcbenh + slcbenh * 100000) + " VND\n" +
                             "Số lượng thú chăm sóc hộ: " + slcsho + " Con\n" +

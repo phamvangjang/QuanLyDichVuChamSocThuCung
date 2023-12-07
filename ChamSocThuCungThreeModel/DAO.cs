@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ChamSocThuCungThreeModel
 {
@@ -93,10 +94,18 @@ namespace ChamSocThuCungThreeModel
 
         public DataTable ThongKe()
         {
+            /*
+              SELECT DichVu,
+                COUNT(*) AS TongSoLuong, 
+                SUM(CASE WHEN DichVu COLLATE Vietnamese_CI_AI LIKE N'Chữa bệnh%' THEN ChiPhiThuoc ELSE 0 END) AS TongDoanhThuChuaBenh,
+                SUM(CASE WHEN DichVu COLLATE Vietnamese_CI_AI LIKE N'Chăm sóc hộ%' THEN SoNgay ELSE 0 END) AS TongDoanhThuChamSocHo 
+                FROM ThuCung 
+                GROUP BY DichVu;
+            */
             string query = $"SELECT DichVu, " +
                 $"COUNT(*) AS TongSoLuong, " +
-                $"SUM(CASE WHEN DichVu = 'Chữa bệnh' THEN ChiPhiThuoc ELSE 0 END) AS TongDoanhThuChuaBenh, " +
-                $"SUM(CASE WHEN DichVu = 'Chăm sóc hộ' THEN SoNgay ELSE 0 END) AS TongDoanhThuChamSocHo " +
+                $"SUM(CASE WHEN DichVu COLLATE Vietnamese_CI_AI LIKE N'Chữa bệnh%' THEN ChiPhiThuoc ELSE 0 END) AS TongDoanhThuChuaBenh, " +
+                $"SUM(CASE WHEN DichVu COLLATE Vietnamese_CI_AI LIKE N'Chăm sóc hộ%' THEN SoNgay ELSE 0 END) AS TongDoanhThuChamSocHo " +
                 $"FROM ThuCung " +
                 $"GROUP BY DichVu;";
             return DataProvider.Instance.execSql(query);

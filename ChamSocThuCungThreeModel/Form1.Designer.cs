@@ -102,7 +102,7 @@
             this.gbtttc.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbtttc.Location = new System.Drawing.Point(12, 62);
             this.gbtttc.Name = "gbtttc";
-            this.gbtttc.Size = new System.Drawing.Size(424, 480);
+            this.gbtttc.Size = new System.Drawing.Size(424, 467);
             this.gbtttc.TabIndex = 1;
             this.gbtttc.TabStop = false;
             this.gbtttc.Text = "Thông tin thú cưng";
@@ -161,9 +161,9 @@
             // dtNgayNhan
             // 
             this.dtNgayNhan.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtNgayNhan.Location = new System.Drawing.Point(159, 208);
+            this.dtNgayNhan.Location = new System.Drawing.Point(167, 208);
             this.dtNgayNhan.Name = "dtNgayNhan";
-            this.dtNgayNhan.Size = new System.Drawing.Size(259, 34);
+            this.dtNgayNhan.Size = new System.Drawing.Size(251, 34);
             this.dtNgayNhan.TabIndex = 14;
             // 
             // txtSongay
@@ -175,9 +175,9 @@
             // 
             // txtTinhtrang
             // 
-            this.txtTinhtrang.Location = new System.Drawing.Point(159, 253);
+            this.txtTinhtrang.Location = new System.Drawing.Point(167, 253);
             this.txtTinhtrang.Name = "txtTinhtrang";
-            this.txtTinhtrang.Size = new System.Drawing.Size(259, 34);
+            this.txtTinhtrang.Size = new System.Drawing.Size(251, 34);
             this.txtTinhtrang.TabIndex = 12;
             // 
             // lblSongay
@@ -218,9 +218,9 @@
             // 
             // txtCanNang
             // 
-            this.txtCanNang.Location = new System.Drawing.Point(159, 163);
+            this.txtCanNang.Location = new System.Drawing.Point(167, 163);
             this.txtCanNang.Name = "txtCanNang";
-            this.txtCanNang.Size = new System.Drawing.Size(259, 34);
+            this.txtCanNang.Size = new System.Drawing.Size(251, 34);
             this.txtCanNang.TabIndex = 7;
             // 
             // lblCanNang
@@ -234,9 +234,9 @@
             // 
             // txtChungLoai
             // 
-            this.txtChungLoai.Location = new System.Drawing.Point(159, 119);
+            this.txtChungLoai.Location = new System.Drawing.Point(167, 119);
             this.txtChungLoai.Name = "txtChungLoai";
-            this.txtChungLoai.Size = new System.Drawing.Size(259, 34);
+            this.txtChungLoai.Size = new System.Drawing.Size(251, 34);
             this.txtChungLoai.TabIndex = 5;
             // 
             // lblChungloai
@@ -266,9 +266,9 @@
             // 
             // txtMadon
             // 
-            this.txtMadon.Location = new System.Drawing.Point(159, 31);
+            this.txtMadon.Location = new System.Drawing.Point(167, 31);
             this.txtMadon.Name = "txtMadon";
-            this.txtMadon.Size = new System.Drawing.Size(259, 34);
+            this.txtMadon.Size = new System.Drawing.Size(251, 34);
             this.txtMadon.TabIndex = 1;
             // 
             // lblMadon
@@ -286,7 +286,7 @@
             this.grbDSTC.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grbDSTC.Location = new System.Drawing.Point(442, 62);
             this.grbDSTC.Name = "grbDSTC";
-            this.grbDSTC.Size = new System.Drawing.Size(598, 480);
+            this.grbDSTC.Size = new System.Drawing.Size(735, 467);
             this.grbDSTC.TabIndex = 2;
             this.grbDSTC.TabStop = false;
             this.grbDSTC.Text = "Danh sách thú cưng";
@@ -303,7 +303,7 @@
             this.lvDanhSachThuCung.HideSelection = false;
             this.lvDanhSachThuCung.Location = new System.Drawing.Point(7, 34);
             this.lvDanhSachThuCung.Name = "lvDanhSachThuCung";
-            this.lvDanhSachThuCung.Size = new System.Drawing.Size(585, 384);
+            this.lvDanhSachThuCung.Size = new System.Drawing.Size(722, 413);
             this.lvDanhSachThuCung.TabIndex = 0;
             this.lvDanhSachThuCung.UseCompatibleStateImageBehavior = false;
             this.lvDanhSachThuCung.View = System.Windows.Forms.View.Details;
@@ -338,71 +338,77 @@
             this.grbTacvu.Controls.Add(this.btnLuu);
             this.grbTacvu.Controls.Add(this.btnThem);
             this.grbTacvu.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grbTacvu.Location = new System.Drawing.Point(12, 559);
+            this.grbTacvu.Location = new System.Drawing.Point(12, 546);
             this.grbTacvu.Name = "grbTacvu";
-            this.grbTacvu.Size = new System.Drawing.Size(1028, 96);
+            this.grbTacvu.Size = new System.Drawing.Size(1165, 96);
             this.grbTacvu.TabIndex = 3;
             this.grbTacvu.TabStop = false;
             this.grbTacvu.Text = "Tác Vụ ";
             // 
             // btnThongKe
             // 
-            this.btnThongKe.Location = new System.Drawing.Point(863, 31);
+            this.btnThongKe.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnThongKe.Location = new System.Drawing.Point(999, 31);
             this.btnThongKe.Name = "btnThongKe";
             this.btnThongKe.Size = new System.Drawing.Size(150, 50);
             this.btnThongKe.TabIndex = 5;
             this.btnThongKe.Text = "Thống kê";
-            this.btnThongKe.UseVisualStyleBackColor = true;
+            this.btnThongKe.UseVisualStyleBackColor = false;
             this.btnThongKe.Click += new System.EventHandler(this.btnThongKe_Click);
             // 
             // btnSapXep
             // 
-            this.btnSapXep.Location = new System.Drawing.Point(695, 31);
+            this.btnSapXep.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnSapXep.Location = new System.Drawing.Point(807, 31);
             this.btnSapXep.Name = "btnSapXep";
             this.btnSapXep.Size = new System.Drawing.Size(150, 50);
             this.btnSapXep.TabIndex = 4;
             this.btnSapXep.Text = "Sắp Xếp ";
-            this.btnSapXep.UseVisualStyleBackColor = true;
+            this.btnSapXep.UseVisualStyleBackColor = false;
             this.btnSapXep.Click += new System.EventHandler(this.btnSapXep_Click);
             // 
             // btnSua
             // 
-            this.btnSua.Location = new System.Drawing.Point(525, 31);
+            this.btnSua.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnSua.Location = new System.Drawing.Point(608, 31);
             this.btnSua.Name = "btnSua";
             this.btnSua.Size = new System.Drawing.Size(150, 50);
             this.btnSua.TabIndex = 3;
             this.btnSua.Text = "Sửa";
-            this.btnSua.UseVisualStyleBackColor = true;
+            this.btnSua.UseVisualStyleBackColor = false;
             this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnXoa
             // 
-            this.btnXoa.Location = new System.Drawing.Point(355, 31);
+            this.btnXoa.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnXoa.Location = new System.Drawing.Point(406, 31);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(150, 50);
             this.btnXoa.TabIndex = 2;
             this.btnXoa.Text = "Xóa";
-            this.btnXoa.UseVisualStyleBackColor = true;
+            this.btnXoa.UseVisualStyleBackColor = false;
             this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // btnLuu
             // 
-            this.btnLuu.Location = new System.Drawing.Point(187, 31);
+            this.btnLuu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnLuu.Location = new System.Drawing.Point(218, 31);
             this.btnLuu.Name = "btnLuu";
             this.btnLuu.Size = new System.Drawing.Size(150, 50);
             this.btnLuu.TabIndex = 1;
             this.btnLuu.Text = "Lưu";
-            this.btnLuu.UseVisualStyleBackColor = true;
+            this.btnLuu.UseVisualStyleBackColor = false;
             this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
             // 
             // btnThem
             // 
+            this.btnThem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnThem.Location = new System.Drawing.Point(12, 31);
             this.btnThem.Name = "btnThem";
             this.btnThem.Size = new System.Drawing.Size(150, 50);
             this.btnThem.TabIndex = 0;
             this.btnThem.Text = "Thêm ";
-            this.btnThem.UseVisualStyleBackColor = true;
+            this.btnThem.UseVisualStyleBackColor = false;
             this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // Form1
@@ -410,7 +416,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(1052, 678);
+            this.ClientSize = new System.Drawing.Size(1184, 665);
             this.Controls.Add(this.grbTacvu);
             this.Controls.Add(this.grbDSTC);
             this.Controls.Add(this.gbtttc);
