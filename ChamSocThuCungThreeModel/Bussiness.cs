@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,12 @@ namespace ChamSocThuCungThreeModel
                 item.SubItems.Add(row["TenThuCung"].ToString());
                 item.SubItems.Add(row["ChungLoai"].ToString());
                 item.SubItems.Add(row["NgayNhan"].ToString());
+                int canNang = int.Parse(row["CanNang"].ToString());
+
+                if (canNang > 40)
+                {
+                    item.BackColor = Color.Yellow;
+                }
                 listView.Items.Add(item);
             }
         }
@@ -53,17 +60,22 @@ namespace ChamSocThuCungThreeModel
                     listViewItem.SubItems.Add(form1.txtChungLoai.Text);
                     listViewItem.SubItems.Add(ngaynhan);
 
-                    form1.lvDanhSachThuCung.Items.Add(listViewItem);
-
                     thuCungBenh.MaDon = form1.txtMadon.Text;
                     thuCungBenh.TenThu = form1.txtTenThu.Text;
                     thuCungBenh.Chungloai = form1.txtChungLoai.Text;
-                    thuCungBenh.Cannang = Convert.ToInt32(form1.txtCanNang.Text);
+                    int canNang = Convert.ToInt32(form1.txtCanNang.Text);
+                    thuCungBenh.Cannang = canNang;
                     thuCungBenh.NgayNhan = DateTime.Parse(ngaynhan);
                     thuCungBenh.TinhTrang = form1.txtTinhtrang.Text;
                     string dichvu = "Chữa bệnh";
                     thuCungBenh.DichVu = dichvu;
                     thuCungBenh.ChiPhiThuoc = float.Parse(form1.txtChiphithuoc.Text);
+
+                    if (canNang>40)
+                    {
+                        listViewItem.BackColor = Color.Yellow;
+                    }
+                    form1.lvDanhSachThuCung.Items.Add(listViewItem);
 
                     DAO.Instance.LuuThuCungBenh(thuCungBenh);
                     MessageBox.Show("Đã thêm phim thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -75,18 +87,23 @@ namespace ChamSocThuCungThreeModel
                     listViewItem.SubItems.Add(form1.txtTenThu.Text);
                     listViewItem.SubItems.Add(form1.txtChungLoai.Text);
                     listViewItem.SubItems.Add(ngaynhan);
-
-                    form1.lvDanhSachThuCung.Items.Add(listViewItem);
-
+                    
                     thuCungBinhThuong.MaDon = form1.txtMadon.Text;
                     thuCungBinhThuong.TenThu = form1.txtTenThu.Text;
                     thuCungBinhThuong.Chungloai = form1.txtChungLoai.Text;
-                    thuCungBinhThuong.Cannang = Convert.ToInt32(form1.txtCanNang.Text);
+                    int canNang = Convert.ToInt32(form1.txtCanNang.Text);
+                    thuCungBinhThuong.Cannang = canNang;
                     thuCungBinhThuong.NgayNhan = DateTime.Parse(ngaynhan);
                     thuCungBinhThuong.TinhTrang = form1.txtTinhtrang.Text;
                     string dichvu = "Chăm sóc hộ";
                     thuCungBinhThuong.DichVu = dichvu;
                     thuCungBinhThuong.ChiPhiThuoc = Convert.ToInt32(form1.txtSongay.Text);
+
+                    if (canNang > 40)
+                    {
+                        listViewItem.BackColor = Color.Yellow;
+                    }
+                    form1.lvDanhSachThuCung.Items.Add(listViewItem);
 
                     DAO.Instance.LuuThuCungBth(thuCungBinhThuong);
                     MessageBox.Show("Đã thêm phim thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
