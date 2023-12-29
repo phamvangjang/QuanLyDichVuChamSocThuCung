@@ -31,8 +31,7 @@ namespace ChamSocThuCungThreeModel
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            rdbtnChuaBenh.Checked = true;
-            dtNgayNhan.Value = DateTime.Now;
+            Reset();
             Bussiness.Instance.Xem(lvDanhSachThuCung);
         }
 
@@ -42,6 +41,7 @@ namespace ChamSocThuCungThreeModel
             {
                 txtChiphithuoc.Visible = true;
                 txtSongay.Visible = false;
+                txtChiphithuoc.Clear();
                 lblChiphithuoc.Visible = true;
                 lblSongay.Visible = false;
             }
@@ -53,6 +53,7 @@ namespace ChamSocThuCungThreeModel
             {
                 txtChiphithuoc.Visible = false;
                 txtSongay.Visible = true;
+                txtSongay.Clear();
                 lblSongay.Visible = true;
                 lblChiphithuoc.Visible = false;
             }
@@ -79,46 +80,39 @@ namespace ChamSocThuCungThreeModel
             Reset();
         }
 
-        public bool validate = false;
+        public new bool Validate
+        {
+            get
+            {
+                // Kiểm tra thông tin có hợp lệ
+                if (string.IsNullOrEmpty(txtMadon.Text) || string.IsNullOrEmpty(txtTenThu.Text) || string.IsNullOrEmpty(txtChungLoai.Text) || string.IsNullOrEmpty(txtCanNang.Text) || string.IsNullOrEmpty(txtTinhtrang.Text))
+                {
+                    MessageBox.Show("Thông tin không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                if (dtNgayNhan.Value > DateTime.Now)
+                {
+                    MessageBox.Show("Ngày nhận không được lớn hơn ngày hiện tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                if (txtSongay.Text.Any(n => !char.IsDigit(n)) && rdbtnChamSocHo.Checked)
+                {
+                    MessageBox.Show("Số ngày chăm sóc phải là số dương!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                if (txtChiphithuoc.Text.Any(n => !char.IsDigit(n)) && rdbtnChuaBenh.Checked)
+                {
+                    MessageBox.Show("Chi phí thuốc phải là số dương!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                return true;
+            }
+        }
+
         private void btnLuu_Click(object sender, EventArgs e)
         {
             // Kiểm tra thông tin có hợp lệ
-            if (string.IsNullOrEmpty(txtMadon.Text))
-            {
-                MessageBox.Show("Mã đơn không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (string.IsNullOrEmpty(txtTenThu.Text))
-            {
-                MessageBox.Show("Tên thú cưng không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (string.IsNullOrEmpty(txtChungLoai.Text))
-            {
-                MessageBox.Show("Chủng loại không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (string.IsNullOrEmpty(txtCanNang.Text))
-            {
-                MessageBox.Show("Cân nặng không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            DateTime ngayCongChieu;
-            if (!DateTime.TryParse(dtNgayNhan.Text, out ngayCongChieu))
-            {
-                MessageBox.Show("Ngày nhận không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (string.IsNullOrEmpty(txtTinhtrang.Text))
-            {
-                MessageBox.Show("Tình trạng không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            else
-            {
-                validate = true;
-            }
-            if (validate == true)
+            if (Validate)
             {
                 Bussiness.Instance.Luu(lvDanhSachThuCung);
             }
@@ -129,7 +123,7 @@ namespace ChamSocThuCungThreeModel
             if (lvDanhSachThuCung.SelectedItems.Count > 0)
             {
                 //hien thi hop thoai xac nhan
-                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn xóa phim này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn xóa thu cung này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dialogResult == DialogResult.Yes)
                 {
                     //lay dong duoc chon
@@ -162,12 +156,12 @@ namespace ChamSocThuCungThreeModel
 
                     // Thực hiện xóa từ cơ sở dữ liệu
                     Bussiness.Instance.XoaThongtinTheoMaDon(maDon);
-                    MessageBox.Show("Đã xóa phim thành công!", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    MessageBox.Show("Đã xóa thú cưng thành công!", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 }
             }
             else
             {
-                MessageBox.Show("Bạn chưa chọn phim nào!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Bạn chưa chọn thu cung nào!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }
@@ -220,15 +214,18 @@ namespace ChamSocThuCungThreeModel
 
         private void btnSua_Click(object sender, EventArgs e)
         {
-            Bussiness.Instance.Sua(lvDanhSachThuCung);
-            lvDanhSachThuCung.Items.Clear();
-            Bussiness.Instance.Xem(lvDanhSachThuCung);
+            if (Validate)
+            {
+                Bussiness.Instance.Sua(lvDanhSachThuCung);
+                lvDanhSachThuCung.Items.Clear();
+                Bussiness.Instance.Xem(lvDanhSachThuCung);
+            }
         }
 
         private void btnSapXep_Click(object sender, EventArgs e)
         {
             lvDanhSachThuCung.Items.Clear();
-            Bussiness.Instance.SapXepPhims(lvDanhSachThuCung);
+            Bussiness.Instance.SapXepThuCung(lvDanhSachThuCung);
         }
 
         private void btnThongKe_Click(object sender, EventArgs e)

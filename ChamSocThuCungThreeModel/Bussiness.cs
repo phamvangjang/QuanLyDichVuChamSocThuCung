@@ -39,7 +39,7 @@ namespace ChamSocThuCungThreeModel
 
                 if (canNang > 40)
                 {
-                    item.BackColor = Color.Yellow;
+                    item.BackColor = Color.LightGoldenrodYellow;
                 }
                 listView.Items.Add(item);
             }
@@ -47,67 +47,49 @@ namespace ChamSocThuCungThreeModel
 
         public void Luu(ListView lv)
         {
-            ThuCungBenh thuCungBenh = new ThuCungBenh();
-            ThuCungBinhThuong thuCungBinhThuong = new ThuCungBinhThuong();
+            ThuCung thuCung = new ThuCung();
             Form1 form1 = Application.OpenForms.OfType<Form1>().FirstOrDefault();
             if (form1 != null)
             {
+                //save to listview
+                string ngaynhan = form1.dtNgayNhan.Value.ToShortDateString();
+                ListViewItem listViewItem = new ListViewItem(form1.txtMadon.Text);
+                listViewItem.SubItems.Add(form1.txtTenThu.Text);
+                listViewItem.SubItems.Add(form1.txtChungLoai.Text);
+                listViewItem.SubItems.Add(ngaynhan);
+                form1.lvDanhSachThuCung.Items.Add(listViewItem);
+
+                //save info form object
+                thuCung.MaDon = form1.txtMadon.Text;
+                thuCung.TenThu = form1.txtTenThu.Text;
+                thuCung.Chungloai = form1.txtChungLoai.Text;
+                int canNang = Convert.ToInt32(form1.txtCanNang.Text);
+                thuCung.Cannang = canNang;
+                thuCung.NgayNhan = DateTime.Parse(ngaynhan);
+                thuCung.TinhTrang = form1.txtTinhtrang.Text;
+
+                //hight light height for thu cung
+                if (canNang > 40)
+                {
+                    listViewItem.BackColor = Color.LightGoldenrodYellow;
+                }
+
                 if (form1.rdbtnChuaBenh.Checked)
                 {
-                    string ngaynhan = form1.dtNgayNhan.Value.ToShortDateString();
-                    ListViewItem listViewItem = new ListViewItem(form1.txtMadon.Text);
-                    listViewItem.SubItems.Add(form1.txtTenThu.Text);
-                    listViewItem.SubItems.Add(form1.txtChungLoai.Text);
-                    listViewItem.SubItems.Add(ngaynhan);
-
-                    thuCungBenh.MaDon = form1.txtMadon.Text;
-                    thuCungBenh.TenThu = form1.txtTenThu.Text;
-                    thuCungBenh.Chungloai = form1.txtChungLoai.Text;
-                    int canNang = Convert.ToInt32(form1.txtCanNang.Text);
-                    thuCungBenh.Cannang = canNang;
-                    thuCungBenh.NgayNhan = DateTime.Parse(ngaynhan);
-                    thuCungBenh.TinhTrang = form1.txtTinhtrang.Text;
-                    string dichvu = "Chữa bệnh";
-                    thuCungBenh.DichVu = dichvu;
-                    thuCungBenh.ChiPhiThuoc = float.Parse(form1.txtChiphithuoc.Text);
-
-                    if (canNang>40)
-                    {
-                        listViewItem.BackColor = Color.Yellow;
-                    }
-                    form1.lvDanhSachThuCung.Items.Add(listViewItem);
-
-                    DAO.Instance.LuuThuCungBenh(thuCungBenh);
-                    MessageBox.Show("Đã thêm phim thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    thuCung.DichVu = "ChuaBenh";
+                    thuCung.ChiPhiThuoc = float.Parse(form1.txtChiphithuoc.Text);
+                    thuCung.TongChiPhi = 100000 + float.Parse(form1.txtChiphithuoc.Text);
+                    thuCung.Songay = 0;
                 }
                 else if (form1.rdbtnChamSocHo.Checked)
                 {
-                    string ngaynhan = form1.dtNgayNhan.Value.ToShortDateString();
-                    ListViewItem listViewItem = new ListViewItem(form1.txtMadon.Text);
-                    listViewItem.SubItems.Add(form1.txtTenThu.Text);
-                    listViewItem.SubItems.Add(form1.txtChungLoai.Text);
-                    listViewItem.SubItems.Add(ngaynhan);
-                    
-                    thuCungBinhThuong.MaDon = form1.txtMadon.Text;
-                    thuCungBinhThuong.TenThu = form1.txtTenThu.Text;
-                    thuCungBinhThuong.Chungloai = form1.txtChungLoai.Text;
-                    int canNang = Convert.ToInt32(form1.txtCanNang.Text);
-                    thuCungBinhThuong.Cannang = canNang;
-                    thuCungBinhThuong.NgayNhan = DateTime.Parse(ngaynhan);
-                    thuCungBinhThuong.TinhTrang = form1.txtTinhtrang.Text;
-                    string dichvu = "Chăm sóc hộ";
-                    thuCungBinhThuong.DichVu = dichvu;
-                    thuCungBinhThuong.ChiPhiThuoc = Convert.ToInt32(form1.txtSongay.Text);
-
-                    if (canNang > 40)
-                    {
-                        listViewItem.BackColor = Color.Yellow;
-                    }
-                    form1.lvDanhSachThuCung.Items.Add(listViewItem);
-
-                    DAO.Instance.LuuThuCungBth(thuCungBinhThuong);
-                    MessageBox.Show("Đã thêm phim thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    thuCung.DichVu = "ChamSocHo";
+                    thuCung.Songay = int.Parse(form1.txtSongay.Text);
+                    thuCung.TongChiPhi = 200000 * int.Parse(form1.txtSongay.Text);
+                    thuCung.ChiPhiThuoc = 0;
                 }
+                DAO.Instance.LuuThuCung(thuCung);
+                MessageBox.Show("Đã thêm thú cưng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -129,7 +111,7 @@ namespace ChamSocThuCungThreeModel
                 thuCungs.NgayNhan = DateTime.Parse(dataRow[4].ToString());
                 thuCungs.TinhTrang = dataRow[5].ToString();
                 thuCungs.DichVu = dataRow[6].ToString();
-                if (dataRow[7].ToString() != "")
+                if (dataRow[6].ToString() == "ChuaBenh")
                 {
                     thuCungs.ChiPhiThuoc = float.Parse(dataRow[7].ToString());
                     thuCungs.Songay = 0;
@@ -139,14 +121,14 @@ namespace ChamSocThuCungThreeModel
                     thuCungs.Songay = int.Parse(dataRow[8].ToString());
                     thuCungs.ChiPhiThuoc = 0;
                 }
+                thuCungs.TongChiPhi = float.Parse(dataRow[9].ToString());
             }
             return thuCungs;
         }
 
         public void Sua(ListView listView)
         {
-            ThuCungBenh thuCungBenh = new ThuCungBenh();
-            ThuCungBinhThuong thuCungBinhThuong = new ThuCungBinhThuong();
+            ThuCung thuCung = new ThuCung();
             Form1 form1 = Application.OpenForms.OfType<Form1>().FirstOrDefault();
             if (form1.lvDanhSachThuCung.SelectedItems.Count > 0)
             {
@@ -154,40 +136,38 @@ namespace ChamSocThuCungThreeModel
                 if (!string.IsNullOrEmpty(madon))
                 {
                     string ngaynhan = form1.dtNgayNhan.Value.ToShortDateString();
+                    thuCung.TenThu = form1.txtTenThu.Text;
+                    thuCung.Chungloai = form1.txtChungLoai.Text;
+                    thuCung.Cannang = Convert.ToInt32(form1.txtCanNang.Text);
+                    thuCung.NgayNhan = DateTime.Parse(ngaynhan);
+                    thuCung.TinhTrang = form1.txtTinhtrang.Text;
                     if (form1.rdbtnChuaBenh.Checked)
                     {
-                        thuCungBenh.TenThu = form1.txtTenThu.Text;
-                        thuCungBenh.Chungloai = form1.txtChungLoai.Text;
-                        thuCungBenh.Cannang = Convert.ToInt32(form1.txtCanNang.Text);
-                        thuCungBenh.NgayNhan = DateTime.Parse(ngaynhan);
-                        thuCungBenh.TinhTrang = form1.txtTinhtrang.Text;
-                        thuCungBenh.DichVu = "Chữa bệnh";
-                        thuCungBenh.ChiPhiThuoc = float.Parse(form1.txtChiphithuoc.Text);
-                        DAO.Instance.SuaThuCungBenh(thuCungBenh, madon);
-                        MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        thuCung.DichVu = "ChuaBenh";
+                        thuCung.ChiPhiThuoc = float.Parse(form1.txtChiphithuoc.Text);
+                        thuCung.Songay = 0;
+                        thuCung.TongChiPhi = 100000 + float.Parse(form1.txtChiphithuoc.Text);
+                        
                     }
                     else if (form1.rdbtnChamSocHo.Checked)
                     {
-                        thuCungBinhThuong.TenThu = form1.txtTenThu.Text;
-                        thuCungBinhThuong.Chungloai = form1.txtChungLoai.Text;
-                        thuCungBinhThuong.Cannang = Convert.ToInt32(form1.txtCanNang.Text);
-                        thuCungBinhThuong.NgayNhan = DateTime.Parse(ngaynhan);
-                        thuCungBinhThuong.TinhTrang = form1.txtTinhtrang.Text;
-                        thuCungBinhThuong.DichVu = "Chăm sóc hộ";
-                        thuCungBinhThuong.Songay = int.Parse(form1.txtChiphithuoc.Text);
-                        DAO.Instance.SuathuCungBth(thuCungBinhThuong, madon);
-                        MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        thuCung.DichVu = "ChamSocHo";
+                        thuCung.Songay = int.Parse(form1.txtChiphithuoc.Text);
+                        thuCung.ChiPhiThuoc = 0;
+                        thuCung.TongChiPhi = 200000 * float.Parse(form1.txtSongay.Text);
                     }
+                    DAO.Instance.SuaThuCung(thuCung, madon);
+                    MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             else
             {
-                MessageBox.Show("Bạn chưa chọn phim nào để sửa!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Bạn chưa chọn thú cưng nào để sửa!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }
 
-        public void SapXepPhims(ListView listView)
+        public void SapXepThuCung(ListView listView)
         {
             foreach (DataRow row in DAO.Instance.SapXepThuCung().Rows)
             {
@@ -195,6 +175,14 @@ namespace ChamSocThuCungThreeModel
                 item.SubItems.Add(row["TenThuCung"].ToString());
                 item.SubItems.Add(row["ChungLoai"].ToString());
                 item.SubItems.Add(row["NgayNhan"].ToString());
+
+                //hightlight listview if height >40
+                int height = int.Parse(row["CanNang"].ToString());
+                if (height > 40)
+                {
+                    item.BackColor = Color.LightGoldenrodYellow;
+                }
+
                 listView.Items.Add(item);
             }
         }

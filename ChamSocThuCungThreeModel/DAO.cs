@@ -31,20 +31,13 @@ namespace ChamSocThuCungThreeModel
             return DataProvider.Instance.execSql(sql);
         }
         
-        public bool LuuThuCungBenh(ThuCungBenh thuCung)
+        public bool LuuThuCung(ThuCung thuCung)
         {
-            string sql = "INSERT INTO ThuCung(MaDon, TenThuCung, ChungLoai, CanNang, NgayNhan, TinhTrang, DichVu, ChiPhiThuoc)" + "VALUES ( @MaDon, @TenThuCung, @ChungLoai, @CanNang, @NgayNhan, @TinhTrang, @DichVu, @ChiPhiThuoc )";
-            Object[] prms = new object[] { thuCung.MaDon, thuCung.TenThu, thuCung.Chungloai, thuCung.Cannang, thuCung.NgayNhan, thuCung.TinhTrang, thuCung.DichVu, thuCung.ChiPhiThuoc };
+            string sql = "INSERT INTO ThuCung(MaDon, TenThuCung, ChungLoai, CanNang, NgayNhan, TinhTrang, DichVu, ChiPhiThuoc, SoNgay, Tong)" + "VALUES ( @MaDon, @TenThuCung, @ChungLoai, @CanNang, @NgayNhan, @TinhTrang, @DichVu, @ChiPhiThuoc, @SoNgay, Tong )";
+            Object[] prms = new object[] { thuCung.MaDon, thuCung.TenThu, thuCung.Chungloai, thuCung.Cannang, thuCung.NgayNhan, thuCung.TinhTrang, thuCung.DichVu, thuCung.ChiPhiThuoc, thuCung.Songay, thuCung.TongChiPhi };
             return DataProvider.Instance.execNonSql(sql, prms) > 0;
         }
         
-        public bool LuuThuCungBth(ThuCungBinhThuong thuCungbth)
-        {
-            string sql = "INSERT INTO ThuCung(MaDon, TenThuCung, ChungLoai, CanNang, NgayNhan, TinhTrang, DichVu, SoNgay)" + "VALUES ( @MaDon, @TenThuCung, @ChungLoai, @CanNang, @NgayNhan, @TinhTrang, @DichVu, @SoNgay )";
-            Object[] prms = new object[] { thuCungbth.MaDon, thuCungbth.TenThu, thuCungbth.Chungloai, thuCungbth.Cannang, thuCungbth.NgayNhan, thuCungbth.TinhTrang, thuCungbth.DichVu, thuCungbth.Songay };
-            return DataProvider.Instance.execNonSql(sql, prms) > 0;
-        }
-
         public bool XoaThongtinTheoMaDon(string maDon)
         {
             try
@@ -55,8 +48,9 @@ namespace ChamSocThuCungThreeModel
                 // Kiểm tra số dòng bị ảnh hưởng, nếu lớn hơn 0, xóa thành công
                 return affectedRows > 0;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
+                MessageBox.Show("Không xóa được thú cưng: ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -70,19 +64,11 @@ namespace ChamSocThuCungThreeModel
             return DataProvider.Instance.execSql(query);
         }
 
-        public bool SuaThuCungBenh(ThuCungBenh thuCungBenh, string madon)
+        public bool SuaThuCung(ThuCung thuCung, string madon)
         {
-            string query = "UPDATE ThuCung SET TenThuCung = @TenThuCung, ChungLoai = @ChungLoai, CanNang = @CanNang, NgayNhan = @NgayNhan, TinhTrang = @TinhTrang, DichVu = @DichVu, ChiPhiThuoc = @ChiPhiThuoc" +
+            string query = "UPDATE ThuCung SET TenThuCung = @TenThuCung, ChungLoai = @ChungLoai, CanNang = @CanNang, NgayNhan = @NgayNhan, TinhTrang = @TinhTrang, DichVu = @DichVu, ChiPhiThuoc = @ChiPhiThuoc, SoNgay = @SoNgay, Tong = @Tong" +
                 " WHERE MaDon = @MaDon";
-            object[] prms = new object[] { thuCungBenh.TenThu, thuCungBenh.Chungloai, thuCungBenh.Cannang, thuCungBenh.NgayNhan, thuCungBenh.TinhTrang, thuCungBenh.DichVu, thuCungBenh.ChiPhiChua, madon };
-            return DataProvider.Instance.execNonSql(query, prms) > 0;
-        }
-
-        public bool SuathuCungBth(ThuCungBinhThuong thuCungBinhThuong, string madon)
-        {
-            string query = "UPDATE ThuCung SET TenThuCung = @TenThuCung, ChungLoai = @ChungLoai, CanNang = @CanNang, NgayNhan = @NgayNhan, TinhTrang = @TinhTrang, DichVu = @DichVu, SoNgay = @SoNgay" +
-                " WHERE MaDon = @MaDon";
-            object[] prms = new object[] { thuCungBinhThuong.TenThu, thuCungBinhThuong.Chungloai, thuCungBinhThuong.Cannang, thuCungBinhThuong.NgayNhan, thuCungBinhThuong.TinhTrang, thuCungBinhThuong.DichVu, thuCungBinhThuong.Songay, madon };
+            object[] prms = new object[] { thuCung.TenThu, thuCung.Chungloai, thuCung.Cannang, thuCung.NgayNhan, thuCung.TinhTrang, thuCung.DichVu, thuCung.ChiPhiThuoc, thuCung.Songay, thuCung.TongChiPhi, madon };
             return DataProvider.Instance.execNonSql(query, prms) > 0;
         }
 
