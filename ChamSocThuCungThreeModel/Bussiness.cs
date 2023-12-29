@@ -152,7 +152,7 @@ namespace ChamSocThuCungThreeModel
                     else if (form1.rdbtnChamSocHo.Checked)
                     {
                         thuCung.DichVu = "ChamSocHo";
-                        thuCung.Songay = int.Parse(form1.txtChiphithuoc.Text);
+                        thuCung.Songay = int.Parse(form1.txtSongay.Text);
                         thuCung.ChiPhiThuoc = 0;
                         thuCung.TongChiPhi = 200000 * float.Parse(form1.txtSongay.Text);
                     }
@@ -199,9 +199,9 @@ namespace ChamSocThuCungThreeModel
             double dtcsho = dataRow2.Field<double>("TongDoanhThuChamSocHo");
 
             MessageBox.Show("Số lượng thú chữa bệnh: " + slcbenh + " Con\n" +
-                            "Doanh thu thú chữa bệnh: " + (dtcbenh + slcbenh * 100000) + " VND\n" +
+                            "Doanh thu thú chữa bệnh: " + dtcbenh + " VND\n" +
                             "Số lượng thú chăm sóc hộ: " + slcsho + " Con\n" +
-                            "Doanh thu thú chăm sóc hộ: " + (dtcsho + slcsho * 200000 + " VND"),
+                            "Doanh thu thú chăm sóc hộ: " + dtcsho + " VND",
                             "Thống kê", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

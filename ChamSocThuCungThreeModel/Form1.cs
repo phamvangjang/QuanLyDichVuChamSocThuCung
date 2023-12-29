@@ -172,6 +172,7 @@ namespace ChamSocThuCungThreeModel
             {
                 // Lấy giá trị của cột "Mã Đơn" từ dòng được chọn
                 string maDon = lvDanhSachThuCung.SelectedItems[0].SubItems[0].Text;
+                txtMadon.Enabled = false;
 
                 // Gọi phương thức trong Bussiness để lấy thông tin chi tiết từ cơ sở dữ liệu
                 ThuCung thuCung = Bussiness.Instance.LayThongTinPhimTheoMaDon(maDon);
@@ -181,11 +182,11 @@ namespace ChamSocThuCungThreeModel
                 txtCanNang.Text=thuCung.Cannang.ToString();
                 dtNgayNhan.Text = thuCung.NgayNhan.Date.ToString();
                 txtTinhtrang.Text=thuCung.TinhTrang.ToString();
-                if (thuCung.DichVu == "Chữa bệnh")
+                if (thuCung.DichVu == "ChuaBenh")
                 {
                     rdbtnChuaBenh.Checked = true;
                 }
-                else if (thuCung.DichVu == "Chăm sóc hộ")
+                else if (thuCung.DichVu == "ChamSocHo")
                 {
                     rdbtnChamSocHo.Checked = true;
                 }

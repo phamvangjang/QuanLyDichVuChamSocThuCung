@@ -90,8 +90,8 @@ namespace ChamSocThuCungThreeModel
             */
             string query = $"SELECT DichVu, " +
                 $"COUNT(*) AS TongSoLuong, " +
-                $"SUM(CASE WHEN DichVu COLLATE Vietnamese_CI_AI LIKE N'Chữa bệnh%' THEN ChiPhiThuoc ELSE 0 END) AS TongDoanhThuChuaBenh, " +
-                $"SUM(CASE WHEN DichVu COLLATE Vietnamese_CI_AI LIKE N'Chăm sóc hộ%' THEN SoNgay ELSE 0 END) AS TongDoanhThuChamSocHo " +
+                $"SUM(CASE WHEN DichVu = 'ChuaBenh' THEN Tong ELSE 0 END) AS TongDoanhThuChuaBenh, " +
+                $"SUM(CASE WHEN DichVu = 'ChamSocHo' THEN Tong ELSE 0 END) AS TongDoanhThuChamSocHo " +
                 $"FROM ThuCung " +
                 $"GROUP BY DichVu;";
             return DataProvider.Instance.execSql(query);
