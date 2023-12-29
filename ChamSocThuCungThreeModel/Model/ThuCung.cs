@@ -17,5 +17,6 @@ namespace ChamSocThuCungThreeModel.Model
         public string DichVu { get; set; }
         public float ChiPhiThuoc { get; set; }
         public int Songay { get; set; }
+        public float TongChiPhi { get; set;}
     }
 }
