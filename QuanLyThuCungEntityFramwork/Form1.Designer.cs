@@ -160,6 +160,7 @@
             this.btnThongKe.TabIndex = 5;
             this.btnThongKe.Text = "Thống kê";
             this.btnThongKe.UseVisualStyleBackColor = false;
+            this.btnThongKe.Click += new System.EventHandler(this.btnThongKe_Click);
             // 
             // btnSapXep
             // 
@@ -170,6 +171,7 @@
             this.btnSapXep.TabIndex = 4;
             this.btnSapXep.Text = "Sắp Xếp ";
             this.btnSapXep.UseVisualStyleBackColor = false;
+            this.btnSapXep.Click += new System.EventHandler(this.btnSapXep_Click);
             // 
             // btnSua
             // 
@@ -180,6 +182,7 @@
             this.btnSua.TabIndex = 3;
             this.btnSua.Text = "Sửa";
             this.btnSua.UseVisualStyleBackColor = false;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnXoa
             // 
@@ -190,6 +193,7 @@
             this.btnXoa.TabIndex = 2;
             this.btnXoa.Text = "Xóa";
             this.btnXoa.UseVisualStyleBackColor = false;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // btnLuu
             // 
@@ -335,6 +339,7 @@
             this.lvDanhSachThuCung.TabIndex = 0;
             this.lvDanhSachThuCung.UseCompatibleStateImageBehavior = false;
             this.lvDanhSachThuCung.View = System.Windows.Forms.View.Details;
+            this.lvDanhSachThuCung.SelectedIndexChanged += new System.EventHandler(this.lvDanhSachThuCung_SelectedIndexChanged);
             // 
             // txtTenThu
             // 

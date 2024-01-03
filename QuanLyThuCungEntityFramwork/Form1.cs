@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace QuanLyThuCungEntityFramwork
@@ -26,7 +23,6 @@ namespace QuanLyThuCungEntityFramwork
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            /*
             // Hiển thị hộp thoại xác nhận
             DialogResult result = MessageBox.Show("Bạn có muốn đóng ứng dụng không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -34,7 +30,6 @@ namespace QuanLyThuCungEntityFramwork
             {
                 e.Cancel = true; // Ngăn chặn việc đóng ứng dụng nếu người dùng không đồng ý.
             }
-            */
         }
 
         private void ResetListView(IEnumerable<ThuCung> tc)
@@ -45,7 +40,7 @@ namespace QuanLyThuCungEntityFramwork
                 ListViewItem listViewItem = new ListViewItem(a.MaDon);
                 listViewItem.SubItems.Add(a.TenThuCung.ToString());
                 listViewItem.SubItems.Add(a.ChungLoai.ToString());
-                listViewItem.SubItems.Add(a.NgayNhan.ToString());
+                listViewItem.SubItems.Add(a.NgayNhan.Value.ToString("dd/MM/yyyy"));
                 int cn = int.Parse(a.CanNang.ToString());
                 if (cn >= 40)
                 {
@@ -140,16 +135,20 @@ namespace QuanLyThuCungEntityFramwork
                 else
                 {
                     float tcp = 0;
+                    float cpt = 0;
+                    int sn = 0;
                     if (rdbtnChuaBenh.Checked)
                     {
                         tcp += (float.Parse(txtChiphithuoc.Text) + 100000);
+                        cpt = float.Parse(txtChiphithuoc.Text);
                     }
                     else
                     {
                         tcp += (float.Parse(txtSongay.Text) * 200000);
+                        sn = int.Parse(txtSongay.Text);
                     }
                     //save to db
-                    _db.ThuCungs.Add(new ThuCung() { MaDon = txtMadon.Text, TenThuCung = txtTenThu.Text, ChungLoai = txtChungLoai.Text, CanNang = int.Parse(txtCanNang.Text), NgayNhan = dtNgayNhan.Value, TinhTrang = txtTinhtrang.Text, DichVu = rdbtnChuaBenh.Checked ? "ChuaBenh" : "ChamSocHo", ChiPhiThuoc = float.Parse(txtChiphithuoc.Text), SoNgay = int.Parse(txtSongay.Text, Tong = tcp });
+                    _db.ThuCungs.Add(new ThuCung() { MaDon = txtMadon.Text, TenThuCung = txtTenThu.Text, ChungLoai = txtChungLoai.Text, CanNang = int.Parse(txtCanNang.Text), NgayNhan = dtNgayNhan.Value, TinhTrang = txtTinhtrang.Text, DichVu = rdbtnChuaBenh.Checked ? "ChuaBenh" : "ChamSocHo", ChiPhiThuoc = cpt, SoNgay = sn, Tong = tcp });
                     _db.SaveChanges();
 
                     //show to listview
@@ -159,7 +158,7 @@ namespace QuanLyThuCungEntityFramwork
                     listViewItem.SubItems.Add(dtNgayNhan.Value.ToString("dd/MM/yyyy"));
 
                     //hight light listviewitem 
-                    int cn = int.Parse(txtCanNang.ToString());
+                    int cn = int.Parse(txtCanNang.Text);
                     lvDanhSachThuCung.Items.Add(listViewItem);
                     listViewItem.Selected = true;
 
@@ -167,7 +166,175 @@ namespace QuanLyThuCungEntityFramwork
                     {
                         listViewItem.BackColor = Color.LightGoldenrodYellow;
                     }
+                    MessageBox.Show("Đã thêm thú cưng thành công!", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    Reset();
                 }
+            }
+        }
+
+        private void lvDanhSachThuCung_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvDanhSachThuCung.SelectedItems.Count > 0)
+            {
+                //get id in listview
+                string madon = lvDanhSachThuCung.SelectedItems[0].SubItems[0].Text;
+                txtMadon.Enabled = false;
+                //find in _db if exists ?
+                var thu = _db.ThuCungs.SingleOrDefault(z => z.MaDon == madon);
+                if (thu != null)
+                {
+                    txtMadon.Text = thu.MaDon.Trim();
+                    txtTenThu.Text = thu.TenThuCung.Trim();
+                    txtChungLoai.Text = thu.ChungLoai.Trim();
+                    txtCanNang.Text = thu.CanNang.ToString().Trim();
+                    dtNgayNhan.Value = thu.NgayNhan.Value;
+                    txtTinhtrang.Text = thu.TinhTrang.Trim();
+                    if (thu.DichVu.ToString() == "ChuaBenh")
+                    {
+                        rdbtnChuaBenh.Checked = true;
+                        txtChiphithuoc.Text = thu.ChiPhiThuoc.ToString();
+                        txtSongay.Clear();
+                    }
+                    else
+                    {
+                        rdbtnChamSocHo.Checked = true;
+                        txtSongay.Text = thu.SoNgay.ToString().Trim();
+                        txtChiphithuoc.Clear();
+                    }
+                }
+            }
+        }
+
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+            if (lvDanhSachThuCung.SelectedItems.Count > 0)
+            {
+                if (MessageBox.Show("Bạn có chắc chắn muốn xóa thú cưng đã chọn?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    int index = lvDanhSachThuCung.Items.IndexOf(lvDanhSachThuCung.SelectedItems[0]);
+                    string mathu = lvDanhSachThuCung.SelectedItems[0].SubItems[0].Text.Trim();
+
+                    ThuCung thu = _db.ThuCungs.Where(p => p.MaDon.Trim() == mathu).SingleOrDefault();
+                    _db.ThuCungs.Remove(thu);
+                    _db.SaveChanges();
+
+                    lvDanhSachThuCung.Items.Remove(lvDanhSachThuCung.SelectedItems[0]);
+
+                    if (lvDanhSachThuCung.Items.Count > 0)
+                    {
+                        if (index < lvDanhSachThuCung.Items.Count)
+                        {
+                            lvDanhSachThuCung.Items[index].Selected = true;
+                        }
+                        else
+                        {
+                            Reset();
+                        }
+                    }
+                    else if (lvDanhSachThuCung.Items.Count == 0)
+                    {
+                        Reset();
+                    }
+                }
+                MessageBox.Show("Đã xóa thú cưng thành công", "Xác nhận", MessageBoxButtons.OK, MessageBoxIcon.Question);
+            }
+            else
+            {
+                MessageBox.Show("Bạn chưa chọn thú cưng nào để xóa", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            if (lvDanhSachThuCung.SelectedItems.Count > 0)
+            {
+                int index = lvDanhSachThuCung.Items.IndexOf(lvDanhSachThuCung.SelectedItems[0]);
+                string mathu = lvDanhSachThuCung.SelectedItems[0].SubItems[0].Text.Trim();
+
+                ThuCung thu = _db.ThuCungs.Where(p => p.MaDon.Trim() == mathu).SingleOrDefault();
+                float tcp = 0;
+                float cpt = 0;
+                int sn = 0;
+                if (rdbtnChuaBenh.Checked)
+                {
+                    tcp += (float.Parse(txtChiphithuoc.Text) + 100000);
+                    cpt = float.Parse(txtChiphithuoc.Text);
+                }
+                else
+                {
+                    tcp += (float.Parse(txtSongay.Text) * 200000);
+                    sn = int.Parse(txtSongay.Text);
+                }
+
+                if (Validate())
+                {
+                    thu.TenThuCung = txtTenThu.Text;
+                    thu.ChungLoai = txtChungLoai.Text;
+                    thu.CanNang = int.Parse(txtCanNang.Text);
+                    thu.NgayNhan = dtNgayNhan.Value;
+                    thu.CanNang = int.Parse(txtCanNang.Text);
+                    thu.TinhTrang = txtTinhtrang.Text;
+                    thu.DichVu = rdbtnChuaBenh.Checked ? "ChuaBenh" : "ChamSocHo";
+                    thu.ChiPhiThuoc = cpt;
+                    thu.SoNgay = sn;
+                    thu.Tong = tcp;
+                    _db.SaveChanges();
+                    txtMadon.Enabled = true;
+                    ResetListView(_db.ThuCungs.ToList());
+                    Reset();
+                    MessageBox.Show("Đã sửa thú cưng thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Bạn chưa chọn thú cưng nào để sửa", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnSapXep_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var sort = _db.ThuCungs.OrderByDescending(p => p.NgayNhan ).ThenBy(p => p.CanNang).ToList();
+                ResetListView(sort);
+                MessageBox.Show("Đã sắp xếp thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Question);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnThongKe_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var s = from thu in _db.ThuCungs
+                        group thu by thu.DichVu into g
+                        select new
+                        {
+                            dvu = g.Key,
+                            Socon = g.Count(),
+                            Chiphi = g.Sum(p => p.Tong)
+                        };
+
+                string message = "Thống kê theo loại thú cưng\n\n";
+
+                foreach (var t in s)
+                {
+                    if (t.dvu== "ChuaBenh")
+                        message += $"Thú cưng bệnh:\n";
+                    else
+                        message += $"Thú cưng bìn thường:\n";
+                    message += $"Số lượng: {t.Socon}\n";
+                    message += $"Tổng chi phi: {t.Chiphi:#,#}\n\n";
+                }
+
+                MessageBox.Show(message, "Thống kê", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
