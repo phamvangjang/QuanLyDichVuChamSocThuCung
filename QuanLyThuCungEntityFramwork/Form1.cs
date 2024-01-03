@@ -202,6 +202,10 @@ namespace QuanLyThuCungEntityFramwork
                         txtChiphithuoc.Clear();
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Không tìm thấy mã thú cưng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
