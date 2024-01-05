@@ -72,6 +72,7 @@ namespace ChamSocThuCungThreeModel
             txtSongay.Text = string.Empty;
 
             // Gán giá trị mặc định cho các TextBox nhập liệu
+            txtMadon.Enabled = true;
             txtMadon.Focus();
         }
 

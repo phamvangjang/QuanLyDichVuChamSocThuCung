@@ -67,6 +67,7 @@ namespace ChamSocThuCungThreeModel
                 thuCung.Cannang = canNang;
                 thuCung.NgayNhan = DateTime.Parse(ngaynhan);
                 thuCung.TinhTrang = form1.txtTinhtrang.Text;
+                thuCung.TongChiPhi = 0;
 
                 //hight light height for thu cung
                 if (canNang > 40)
@@ -141,12 +142,13 @@ namespace ChamSocThuCungThreeModel
                     thuCung.Cannang = Convert.ToInt32(form1.txtCanNang.Text);
                     thuCung.NgayNhan = DateTime.Parse(ngaynhan);
                     thuCung.TinhTrang = form1.txtTinhtrang.Text;
+                    thuCung.TongChiPhi = 0;
                     if (form1.rdbtnChuaBenh.Checked)
                     {
                         thuCung.DichVu = "ChuaBenh";
                         thuCung.ChiPhiThuoc = float.Parse(form1.txtChiphithuoc.Text);
                         thuCung.Songay = 0;
-                        thuCung.TongChiPhi = 100000 + float.Parse(form1.txtChiphithuoc.Text);
+                        thuCung.TongChiPhi += (100000 + float.Parse(form1.txtChiphithuoc.Text));
                         
                     }
                     else if (form1.rdbtnChamSocHo.Checked)
@@ -154,7 +156,7 @@ namespace ChamSocThuCungThreeModel
                         thuCung.DichVu = "ChamSocHo";
                         thuCung.Songay = int.Parse(form1.txtSongay.Text);
                         thuCung.ChiPhiThuoc = 0;
-                        thuCung.TongChiPhi = 200000 * float.Parse(form1.txtSongay.Text);
+                        thuCung.TongChiPhi += (200000 * float.Parse(form1.txtSongay.Text));
                     }
                     DAO.Instance.SuaThuCung(thuCung, madon);
                     MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -33,7 +33,7 @@ namespace ChamSocThuCungThreeModel
         
         public bool LuuThuCung(ThuCung thuCung)
         {
-            string sql = "INSERT INTO ThuCung(MaDon, TenThuCung, ChungLoai, CanNang, NgayNhan, TinhTrang, DichVu, ChiPhiThuoc, SoNgay, Tong)" + "VALUES ( @MaDon, @TenThuCung, @ChungLoai, @CanNang, @NgayNhan, @TinhTrang, @DichVu, @ChiPhiThuoc, @SoNgay, Tong )";
+            string sql = "INSERT INTO ThuCung(MaDon, TenThuCung, ChungLoai, CanNang, NgayNhan, TinhTrang, DichVu, ChiPhiThuoc, SoNgay, Tong)" + "VALUES ( @MaDon, @TenThuCung, @ChungLoai, @CanNang, @NgayNhan, @TinhTrang, @DichVu, @ChiPhiThuoc, @SoNgay, @Tong )";
             Object[] prms = new object[] { thuCung.MaDon, thuCung.TenThu, thuCung.Chungloai, thuCung.Cannang, thuCung.NgayNhan, thuCung.TinhTrang, thuCung.DichVu, thuCung.ChiPhiThuoc, thuCung.Songay, thuCung.TongChiPhi };
             return DataProvider.Instance.execNonSql(sql, prms) > 0;
         }

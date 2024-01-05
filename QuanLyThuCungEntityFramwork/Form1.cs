@@ -67,6 +67,9 @@ namespace QuanLyThuCungEntityFramwork
             rdbtnChuaBenh.Checked = true;
             txtChiphithuoc.Clear();
             txtSongay.Clear();
+
+            txtMadon.Enabled = true;
+            txtMadon.Focus();
         }
 
         private void rdbtnChuaBenh_CheckedChanged(object sender, EventArgs e)
@@ -90,7 +93,6 @@ namespace QuanLyThuCungEntityFramwork
         private void btnThem_Click(object sender, EventArgs e)
         {
             Reset();
-            txtMadon.Focus();
         }
 
         private new bool Validate()
@@ -139,13 +141,13 @@ namespace QuanLyThuCungEntityFramwork
                     int sn = 0;
                     if (rdbtnChuaBenh.Checked)
                     {
-                        tcp += (float.Parse(txtChiphithuoc.Text) + 100000);
                         cpt = float.Parse(txtChiphithuoc.Text);
+                        tcp += (float.Parse(txtChiphithuoc.Text) + 100000);
                     }
                     else
                     {
-                        tcp += (float.Parse(txtSongay.Text) * 200000);
                         sn = int.Parse(txtSongay.Text);
+                        tcp += (float.Parse(txtSongay.Text) * 200000);
                     }
                     //save to db
                     _db.ThuCungs.Add(new ThuCung() { MaDon = txtMadon.Text, TenThuCung = txtTenThu.Text, ChungLoai = txtChungLoai.Text, CanNang = int.Parse(txtCanNang.Text), NgayNhan = dtNgayNhan.Value, TinhTrang = txtTinhtrang.Text, DichVu = rdbtnChuaBenh.Checked ? "ChuaBenh" : "ChamSocHo", ChiPhiThuoc = cpt, SoNgay = sn, Tong = tcp });
@@ -329,9 +331,9 @@ namespace QuanLyThuCungEntityFramwork
                     if (t.dvu== "ChuaBenh")
                         message += $"Thú cưng bệnh:\n";
                     else
-                        message += $"Thú cưng bìn thường:\n";
+                        message += $"Thú cưng bình thường:\n";
                     message += $"Số lượng: {t.Socon}\n";
-                    message += $"Tổng chi phi: {t.Chiphi:#,#}\n\n";
+                    message += $"Tổng chi phí: {t.Chiphi:#,#}\n\n";
                 }
 
                 MessageBox.Show(message, "Thống kê", MessageBoxButtons.OK, MessageBoxIcon.Information);
