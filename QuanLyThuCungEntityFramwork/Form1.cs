@@ -153,21 +153,7 @@ namespace QuanLyThuCungEntityFramwork
                     _db.ThuCungs.Add(new ThuCung() { MaDon = txtMadon.Text, TenThuCung = txtTenThu.Text, ChungLoai = txtChungLoai.Text, CanNang = int.Parse(txtCanNang.Text), NgayNhan = dtNgayNhan.Value, TinhTrang = txtTinhtrang.Text, DichVu = rdbtnChuaBenh.Checked ? "ChuaBenh" : "ChamSocHo", ChiPhiThuoc = cpt, SoNgay = sn, Tong = tcp });
                     _db.SaveChanges();
 
-                    //show to listview
-                    ListViewItem listViewItem = new ListViewItem(txtMadon.Text);
-                    listViewItem.SubItems.Add(txtTenThu.Text);
-                    listViewItem.SubItems.Add(rdbtnChuaBenh.Checked ? "ChuaBenh" : "ChamSocHo");
-                    listViewItem.SubItems.Add(dtNgayNhan.Value.ToString("dd/MM/yyyy"));
-
-                    //hight light listviewitem 
-                    int cn = int.Parse(txtCanNang.Text);
-                    lvDanhSachThuCung.Items.Add(listViewItem);
-                    listViewItem.Selected = true;
-
-                    if (cn >= 40)
-                    {
-                        listViewItem.BackColor = Color.LightGoldenrodYellow;
-                    }
+                    ResetListView(_db.ThuCungs.ToList());
                     MessageBox.Show("Đã thêm thú cưng thành công!", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     Reset();
                 }
@@ -287,9 +273,9 @@ namespace QuanLyThuCungEntityFramwork
                     _db.SaveChanges();
                     txtMadon.Enabled = true;
                     ResetListView(_db.ThuCungs.ToList());
-                    Reset();
                     MessageBox.Show("Đã sửa thú cưng thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Question);
                 }
+                lvDanhSachThuCung.Items[index].Selected = true;
             }
             else
             {
@@ -301,7 +287,7 @@ namespace QuanLyThuCungEntityFramwork
         {
             try
             {
-                var sort = _db.ThuCungs.OrderByDescending(p => p.NgayNhan ).ThenBy(p => p.CanNang).ToList();
+                var sort = _db.ThuCungs.OrderByDescending(p => p.NgayNhan ).OrderBy(p => p.CanNang).ToList();
                 ResetListView(sort);
                 MessageBox.Show("Đã sắp xếp thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Question);
             }
